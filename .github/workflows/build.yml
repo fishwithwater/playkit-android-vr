@@ -2,9 +2,9 @@ name: build CI
 
 on:
   push:
-    branches: [ "develop", "master", "main" ]
+    branches: [ "develop", "master", "main", "release/**" ]
   pull_request:
-    branches: [ "develop", "master", "main" ]
+    branches: [ "develop", "master", "main", "release/**" ]
   workflow_call:
 
 concurrency:
