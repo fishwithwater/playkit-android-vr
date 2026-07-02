@@ -18,6 +18,12 @@ public class VRControllerImpl implements VRController {
 
     private View.OnClickListener surfaceClickListener;
     private boolean onApplicationPaused = false;
+    private boolean gyroEnabled = true;
+    private static final MDVRLibrary.IDirectorFilter GYRO_DISABLE_FILTER = new MDVRLibrary.IDirectorFilter() {
+        @Override public float onFilterPitch(float pitch) { return 0f; }
+        @Override public float onFilterYaw(float yaw)     { return 0f; }
+        @Override public float onFilterRoll(float roll)    { return 0f; }
+    };
 
     public VRControllerImpl(Context context, MDVRLibrary vrLib) {
         this.context = context;
@@ -138,6 +144,18 @@ public class VRControllerImpl implements VRController {
             onApplicationPaused = false;
         }
     }
+
+    @Override
+    public void setGyroEnabled(boolean enabled) {
+        if (gyroEnabled == enabled) return;
+        gyroEnabled = enabled;
+        if (vrLib != null) {
+            vrLib.setDirectorFilter(enabled ? null : GYRO_DISABLE_FILTER);
+        }
+    }
+
+    @Override
+    public boolean isGyroEnabled() { return gyroEnabled; }
 
     void release() {
         onApplicationPaused = true;

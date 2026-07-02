@@ -68,4 +68,7 @@ public interface VRController extends PKController {
      */
     VRInteractionMode getInteractionMode();
 
+    void setGyroEnabled(boolean enabled);
+    boolean isGyroEnabled();
+
 }
